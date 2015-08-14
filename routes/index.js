@@ -13,18 +13,21 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/meetups/:id', function(req, res, next){
-  meetups.findOne({_id:req.params.id}, function(err, meetup){
-    locations.findOne({_id:meetup.locationId}, function(err, location){
-      users.find({_id:{$in:meetup.memberIds}}, function(err, members){
-        var followersArray = [];
-        members.forEach(function(members) {
-          followersArray = followersArray.concat(members.follows);
-        })
-        users.find({follows:{$in:[meetup._id]}}, function(err, followers){
-          var meetupsArray = [];
-          followers.forEach(function(followers){
-            meetupsArray = meetupsArray.concat(followers.follows);
-          })
+  meetups.findOne({_id:req.params.id})
+.then(function(meetup){
+  locations.findOne({_id:meetup.locationId})
+.then(function(location){
+  users.find({_id:{$in:meetup.memberIds}})
+.then(function(members){
+  var followersArray = [];
+  members.forEach(function(members) {
+    followersArray = followersArray.concat(members.follows);
+  })
+    users.find({follows:{$in:[meetup._id]}}, function(err, followers){
+      var meetupsArray = [];
+      followers.forEach(function(followers){
+        meetupsArray = meetupsArray.concat(followers.follows);
+      })
 
           meetupsArray = meetupsArray.concat(followersArray);
           meetupsArray= meetupsArray.filter(function(ele){
