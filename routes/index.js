@@ -12,46 +12,51 @@ router.get('/', function(req, res, next) {
   })
 });
 
+
+
+
+
+module.exports = router;
+
+
 // goal
 // router.get('/meetups/:id', function(req, res, next){
 //   getSomeData(req.params.id).then(function(result){
 //     res.render('show', obj)
 //   })
 // })
-
-router.get('/meetups/:id', function(req, res, next){
-  meetups.findOne({_id:req.params.id}).then(function(meetup){
-    locations.findOne({_id:meetup.locationId}).then(function(location){
-      users.find({_id:{$in:meetup.memberIds}}).then(function(members){
-        var followersArray = [];
-        members.forEach(function(members) {
-          followersArray = followersArray.concat(members.follows);
-        })
-        users.find({follows:{$in:[meetup._id]}}).then(function(followers){
-          var meetupsArray = [];
-          followers.forEach(function(followers){
-            meetupsArray = meetupsArray.concat(followers.follows);
-          })
-
-          meetupsArray = meetupsArray.concat(followersArray);
-          meetupsArray= meetupsArray.filter(function(ele){
-            return ele != req.params.id
-          })
-          meetups.find({_id:{$in: meetupsArray}}).then(function(followerMeetups){
-            res.render('show', {
-              documents: meetup,
-              location: location,
-              member: members,
-              follower: followers,
-              followerMeetup: followerMeetups
-            })
-          })
-        })
-      })
-    })
-  })
-});
-module.exports = router;
-
-
 // $in needs to have something in an array!
+
+//
+// router.get('/meetups/:id', function(req, res, next){
+//   meetups.findOne({_id:req.params.id}).then(function(meetup){
+//     locations.findOne({_id:meetup.locationId}).then(function(location){
+//       users.find({_id:{$in:meetup.memberIds}}).then(function(members){
+//         var followersArray = [];
+//         members.forEach(function(members) {
+//           followersArray = followersArray.concat(members.follows);
+//         })
+//         users.find({follows:{$in:[meetup._id]}}).then(function(followers){
+//           var meetupsArray = [];
+//           followers.forEach(function(followers){
+//             meetupsArray = meetupsArray.concat(followers.follows);
+//           })
+//
+//           meetupsArray = meetupsArray.concat(followersArray);
+//           meetupsArray= meetupsArray.filter(function(ele){
+//             return ele != req.params.id
+//           })
+//           meetups.find({_id:{$in: meetupsArray}}).then(function(followerMeetups){
+//             res.render('show', {
+//               documents: meetup,
+//               location: location,
+//               member: members,
+//               follower: followers,
+//               followerMeetup: followerMeetups
+//             })
+//           })
+//         })
+//       })
+//     })
+//   })
+// });
