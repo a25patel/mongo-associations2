@@ -4,6 +4,7 @@ var db = require('monk')('localhost/mongo-associations-lesson')
 var meetups = db.get('meetups')
 var locations = db.get('locations')
 var users = db.get('users')
+var calls = require('../lib/mongo.js')
 
 router.get('/', function(req, res, next) {
   meetups.find({})
@@ -12,16 +13,16 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/meetups/:id', function(req,res,next){
-  meetups.findOne({_id: req.params.id}, function(err, meetup){
-    res.render('show', {
-      meetups: meetup
-    })
+router.get('/meetups/:id', function(req, res, next){
+  calls.findMeetup(req.params.id).
+  then(calls.addMeetupLocation).
+  then(calls.addMeetupMembers).
+  then(calls.addMeetupFollowers).
+  then(calls.addMeetupsFollowed).then(function(master) {
+    console.log(master);
+    res.render('show', master)
   })
 });
-
-
-
 
 module.exports = router;
 
@@ -34,7 +35,8 @@ module.exports = router;
 // })
 // $in needs to have something in an array!
 
-//
+
+
 // router.get('/meetups/:id', function(req, res, next){
 //   meetups.findOne({_id:req.params.id}).then(function(meetup){
 //     locations.findOne({_id:meetup.locationId}).then(function(location){

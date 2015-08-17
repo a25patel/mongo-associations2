@@ -5,22 +5,13 @@
 
 <p><b>Meetup Name: </b>{{meetups.name}}</p>
 <p><b>Meetup Description: </b>{{meetups.description}}</p>
+<p><b>Meetup Location: </b>{{location.name}}</p>
+<p><b>Location Address: </b>{{location.address}}</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<b>Meetup Members: </b>
+{{#each members}}
+  {{name}},
+{{/each}}
 
 
 
