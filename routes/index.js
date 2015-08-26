@@ -14,8 +14,11 @@ router.get('/', function(req, res, next) {
 
 router.get('/meetups/:id', function(req,res,next){
   meetups.findOne({_id: req.params.id}, function(err, oneMeetup){
-    res.render('show', {
-      meetup: oneMeetup
+    locations.findOne({_id: oneMeetup.locationId}, function(err, oneLocation){
+      res.render('show', {
+        meetup: oneMeetup,
+        location: oneLocation
+    })
     })
   })
 });
