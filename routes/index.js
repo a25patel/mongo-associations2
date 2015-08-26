@@ -16,39 +16,36 @@ router.get('/meetups/:id', function(req,res,next){
   meetups.findOne({_id: req.params.id}, function(err, oneMeetup){
     locations.findOne({_id: oneMeetup.locationId}, function(err, oneLocation){
       users.find({_id:{$in: oneMeetup.memberIds}}, function(err, members){
-        users.find({follows:{$in: [oneMeetup._id]}}, function(err, followers){
-          res.render('show', {
-            meetup: oneMeetup,
-            location: oneLocation,
-            members: members,
-            followers: followers
+        memArr = [];
+        members.forEach(function(members){
+          memArr = memArr.concat(members.follows);
         })
-
+        users.find({follows:{$in:[oneMeetup._id]}}, function(err, followers){
+          follArr = [];
+          followers.forEach(function(followers){
+            follArr = follArr.concat(followers.follows)
+          })
+          memArr = memArr.concat(follArr);
+          memArr = memArr.filter(function(element){
+            return element != req.params.id
+          })
+          meetups.find({_id:{$in: memArr}}, function(err, meetupsFollowed){
+            res.render('show', {
+              meetup: oneMeetup,
+              location: oneLocation,
+              members: members,
+              followers: followers,
+              meetupsFollowed: meetupsFollowed
+            })
+          })
+        })
       })
-    })
     })
   })
 });
 
-
-
-
-
-
-
-
-
-
 module.exports = router;
 
-// router.get('/meetups/:id', function(req,res,next){
-//   meetups.findOne({_id:req.params.id}, function(err, oneMeetup){
-//     locations.findOne({_id:oneMeetup.locationId}, function(err, oneLocation){
-//       users.find({_id:{$in: oneMeetup.memberIds}}, function(err, members){
-//         membersArray = [];
-//         members.forEach(function(members){
-//           membersArray = membersArray.concat(members.follows);
-//         })
 //         users.find({follows:{$in:[oneMeetup._id]}}, function(err, followers){
 //           followersArray = [];
 //           followers.forEach(function(followers){
