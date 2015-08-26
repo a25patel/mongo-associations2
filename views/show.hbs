@@ -22,20 +22,16 @@
   <b>Location Address:</b>
   {{location.address}}
 </p>
+
+<p>
+  <b>Meetup Members: </b>
+  {{#each members}}
+    {{name}}
+  {{/each}}
+</p>
 </section>
   <!-- <h1><a href='/meetups/' + document._id></a></h1>
 
-<p><b>Meetup Name: </b>{{meetup.name}}</p>
-<p><b>Meetup Description: </b>{{meetup.description}}</p>
-<p><b>Meetup Location: </b>{{location.name}}</p>
-<p><b>Location Address: </b>{{location.address}}</p>
-
-<b>Meetup Members: </b>
-{{#each members}}
-  {{name}},
-{{/each}}
-
-<p>
   <b> Followers: </b>
   {{#each follower}}
     {{name}},
