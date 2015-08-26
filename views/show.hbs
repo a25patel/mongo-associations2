@@ -20,8 +20,28 @@
 
 <p>
   <b>Location Address:</b>
-  {{location.address  }}  
+  {{location.address  }}
 </p>
 
+<p>
+  <b>Members:</b>
+  {{#each members}}
+    {{name}}
+  {{/each}}
+</p>
+
+<p>
+  <b>Followers:</b>
+  {{#each followers}}
+    {{name}}
+  {{/each}}
+</p>
+
+<p>
+  <b>Meetups Followed:</b>
+  {{#each followedMeetups}}
+    {{name}}
+  {{/each}}
+</p>
 
 </section>
