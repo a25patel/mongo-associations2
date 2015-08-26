@@ -12,72 +12,50 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/meetups/:id', function(req,res,next){
-  meetups.findOne({_id:req.params.id}, function(err, oneMeetup){
-    locations.findOne({_id:oneMeetup.locationId}, function(err, oneLocation){
-      users.find({_id:{$in: oneMeetup.memberIds}}, function(err, members){
-        membersArray = [];
-        members.forEach(function(members){
-          membersArray = membersArray.concat(members.follows);
-        })
-        users.find({follows:{$in:[oneMeetup._id]}}, function(err, followers){
-          followersArray = [];
-          followers.forEach(function(followers){
-            followersArray = followersArray.concat(followers.follows)
-          })
-          followersArray = followersArray.concat(membersArray)
-          followersArray = followersArray.filter(function(element){
-            return element != req.params.id
-          })
-          meetups.find({_id:{$in:followersArray}}, function(err, meetupsFollowed){
-            res.render('show', {
-              meetup: oneMeetup,
-              location: oneLocation,
-              members: members,
-              follower: followers,
-              followerMeetup: meetupsFollowed
-            })
-          })
-        })
-      })
-    })
-  })
-})
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
 
-// router.get('/meetups/:id', function(req, res, next){
-//   meetups.findOne({_id:req.params.id}).then(function(meetup){
-//     locations.findOne({_id:meetup.locationId}).then(function(location){
-//       users.find({_id:{$in:meetup.memberIds}}).then(function(members){
-//         var followersArray = [];
-//         members.forEach(function(members) {
-//           followersArray = followersArray.concat(members.follows);
+// router.get('/meetups/:id', function(req,res,next){
+//   meetups.findOne({_id:req.params.id}, function(err, oneMeetup){
+//     locations.findOne({_id:oneMeetup.locationId}, function(err, oneLocation){
+//       users.find({_id:{$in: oneMeetup.memberIds}}, function(err, members){
+//         membersArray = [];
+//         members.forEach(function(members){
+//           membersArray = membersArray.concat(members.follows);
 //         })
-//         users.find({follows:{$in:[meetup._id]}}).then(function(followers){
-//           var meetupsArray = [];
+//         users.find({follows:{$in:[oneMeetup._id]}}, function(err, followers){
+//           followersArray = [];
 //           followers.forEach(function(followers){
-//             meetupsArray = meetupsArray.concat(followers.follows);
+//             followersArray = followersArray.concat(followers.follows)
 //           })
-//
-//           meetupsArray = meetupsArray.concat(followersArray);
-//           meetupsArray= meetupsArray.filter(function(ele){
-//             return ele != req.params.id
+//           followersArray = followersArray.concat(membersArray)
+//           followersArray = followersArray.filter(function(element){
+//             return element != req.params.id
 //           })
-//           meetups.find({_id:{$in: meetupsArray}}).then(function(followerMeetups){
+//           meetups.find({_id:{$in:followersArray}}, function(err, meetupsFollowed){
 //             res.render('show', {
-//               documents: meetup,
-//               location: location,
-//               member: members,
+//               meetup: oneMeetup,
+//               location: oneLocation,
+//               members: members,
 //               follower: followers,
-//               followerMeetup: followerMeetups
+//               followerMeetup: meetupsFollowed
 //             })
 //           })
 //         })
 //       })
 //     })
 //   })
-// });
+// })
 
 
 // var calls = require('../lib/mongo.js')
