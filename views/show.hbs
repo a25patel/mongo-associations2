@@ -3,8 +3,8 @@
 <section>
   <h1><a href='/meetups/' + document._id></a></h1>
 
-<p><b>Meetup Name: </b>{{meetups.name}}</p>
-<p><b>Meetup Description: </b>{{meetups.description}}</p>
+<p><b>Meetup Name: </b>{{meetup.name}}</p>
+<p><b>Meetup Description: </b>{{meetup.description}}</p>
 <p><b>Meetup Location: </b>{{location.name}}</p>
 <p><b>Location Address: </b>{{location.address}}</p>
 
@@ -12,34 +12,6 @@
 {{#each members}}
   {{name}},
 {{/each}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-</section>
-
-
-
-<!-- <p><b>Meetup: </b> {{documents.name}}</p>
-<p><b>Description: </b> {{documents.description}}</p>
-<p><b>Location: </b> {{location.name}}</p>
-<p><b>Location Address: </b> {{location.address}}</p>
-
-<p>
-  <b>Members: </b>
-  {{#each member}}
-    {{name}},
-  {{/each}}
-</p>
 
 <p>
   <b> Followers: </b>
@@ -53,4 +25,17 @@
   {{#each followerMeetup}}
     {{name}},
   {{/each}}
-</p> -->
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
