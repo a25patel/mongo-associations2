@@ -4,27 +4,42 @@ var db = require('monk')('localhost/mongo-associations-lesson')
 var meetups = db.get('meetups')
 var locations = db.get('locations')
 var users = db.get('users')
-var calls = require('../lib/mongo.js')
 
 router.get('/', function(req, res, next) {
-  meetups.find({})
-.then(function (documents) {
+  meetups.find({}, function (err, documents) {
+    if(err) throw err
     res.render('index', { meetups: documents });
   })
 });
 
-router.get('/meetups/:id', function(req, res, next){
-  calls.findMeetup(req.params.id).
-  then(calls.addMeetupLocation).
-  then(calls.addMeetupMembers).
-  then(calls.addMeetupFollowers).
-  then(calls.addMeetupsFollowed).then(function(master) {
-    console.log(master);
-    res.render('show', master)
-  })
-});
+
 
 module.exports = router;
+
+
+
+
+// var calls = require('../lib/mongo.js')
+//
+// router.get('/', function(req, res, next) {
+//   meetups.find({})
+// .then(function (documents) {
+//     res.render('index', { meetups: documents });
+//   })
+// });
+//
+// // router.get('/meetups/:id', function(req, res, next){
+// //   calls.findMeetup(req.params.id).
+// //   then(calls.addMeetupLocation).
+// //   then(calls.addMeetupMembers).
+// //   then(calls.addMeetupFollowers).
+// //   then(calls.addMeetupsFollowed).then(function(master) {
+// //     console.log(master);
+// //     res.render('show', master)
+// //   })
+// // });
+//
+// module.exports = router;
 
 
 // goal
