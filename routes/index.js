@@ -12,7 +12,13 @@ router.get('/', function(req, res, next) {
   })
 });
 
-
+router.get('/meetups/:id', function(req,res,next){
+  meetups.findOne({_id: req.params.id}, function(err, oneMeetup){
+    res.render('show', {
+      meetup: oneMeetup
+    })
+  })
+});
 
 
 
