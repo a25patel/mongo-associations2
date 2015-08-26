@@ -16,11 +16,14 @@ router.get('/meetups/:id', function(req,res,next){
   meetups.findOne({_id: req.params.id}, function(err, oneMeetup){
     locations.findOne({_id: oneMeetup.locationId}, function(err, oneLocation){
       users.find({_id:{$in: oneMeetup.memberIds}}, function(err, members){
-        res.render('show', {
-          meetup: oneMeetup,
-          location: oneLocation,
-          members: members
-        
+        users.find({follows:{$in: [oneMeetup._id]}}, function(err, followers){
+          res.render('show', {
+            meetup: oneMeetup,
+            location: oneLocation,
+            members: members,
+            followers: followers
+        })
+
       })
     })
     })
