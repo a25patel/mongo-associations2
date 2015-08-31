@@ -22,18 +22,7 @@ router.get('/meetups/:id', function(req,res,next){
 module.exports = router;
 
 
-//
-// // router.get('/meetups/:id', function(req, res, next){
-// //   calls.findMeetup(req.params.id).
-// //   then(calls.addMeetupLocation).
-// //   then(calls.addMeetupMembers).
-// //   then(calls.addMeetupFollowers).
-// //   then(calls.addMeetupsFollowed).then(function(master) {
-// //     console.log(master);
-// //     res.render('show', master)
-// //   })
-// // });
-
+// goal
 // router.get('/meetups/:id', function(req, res, next){
 //   getSomeData(req.params.id).then(function(result){
 //     res.render('show', obj)
